@@ -1,0 +1,148 @@
+{{ 'mobile-sticky-bar.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign should_show = section.settings.show_mobile_sticky
+  assign section_settings = section.settings
+  if section_settings.show_home_icon == false and section_settings.show_cart_icon == false and section_settings.show_wishlist_icon == false and section_settings.show_search_icon == false and section_settings.show_account_icon == false
+    assign should_show = false
+  endif
+%}
+
+{% if template.name != 'product' and should_show %}
+  <div class="m-mobile-sticky-bar md:m:hidden m:flex m:justify-between">
+    {% if section_settings.show_home_icon %}
+      <div class="m-mobile-sticky-bar--item">
+        <a href="{{ routes.root_url }}" aria-label="product">
+
+
+
+<svg fill="currentColor" width="20" height="20" viewBox="0 0 20 20">
+              <g>
+                  <path class="st0" d="M19.8,9l0-0.1l-9.7-8.7l0,0l0,0L0.2,9v10.9h7.9v-7.1h3.5v7.1h8.3V9z M18.4,18.6H13v-7.1H6.7v7.1H1.6V9.7
+                      l8.5-7.7l8.3,7.6V18.6z"></path>
+              </g>
+            </svg>
+
+          
+        </a>
+      </div>
+    {% endif %}
+    {% if section_settings.show_collection_icon %}
+      <div class="m-mobile-sticky-bar--item">
+        <a href="{{ routes.all_products_collection_url }}" aria-label="collection">
+
+
+
+
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 10H7C9 10 10 9 10 7V5C10 3 9 2 7 2H5C3 2 2 3 2 5V7C2 9 3 10 5 10Z" stroke="currentColor" stroke-width="1.35" stroke-miterlimit="10"></path>
+              <path d="M17 10H19C21 10 22 9 22 7V5C22 3 21 2 19 2H17C15 2 14 3 14 5V7C14 9 15 10 17 10Z" stroke="currentColor" stroke-width="1.35" stroke-miterlimit="10"></path>
+              <path d="M17 22H19C21 22 22 21 22 19V17C22 15 21 14 19 14H17C15 14 14 15 14 17V19C14 21 15 22 17 22Z" stroke="currentColor" stroke-width="1.35" stroke-miterlimit="10"></path>
+              <path d="M5 22H7C9 22 10 21 10 19V17C10 15 9 14 7 14H5C3 14 2 15 2 17V19C2 21 3 22 5 22Z" stroke="currentColor" stroke-width="1.35" stroke-miterlimit="10"></path>
+            </svg>
+
+
+
+          
+        </a>
+      </div>
+    {% endif %}
+    {% if section_settings.show_cart_icon %}
+      <div class="m-mobile-sticky-bar--item">
+        {% render 'cart' %}
+      </div>
+    {% endif %}
+    {% if section_settings.show_wishlist_icon %}
+      {% if settings.wishlist_page != blank %}
+        {% assign url = pages[settings.wishlist_page].url %}
+      {% else %}
+        {% assign url = '/pages/wishlist' %}
+      {% endif %}
+      <div class="m-mobile-sticky-bar--item">
+        <a class="m-mobile-sticky-bar--wishlist" href="{{ url }}" aria-label="wishlist">
+
+
+<svg alt-text="Heart icon" data-testid="heart-icon" width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.00009 14.5627L1.60809 7.89606C1.04632 7.33472 0.675536 6.61076 0.548335 5.82686C0.421134 5.04295 0.543972 4.2389 0.899428 3.52873V3.52873C1.16746 2.99281 1.55901 2.52824 2.04179 2.17332C2.52458 1.81839 3.08479 1.58326 3.67626 1.48729C4.26774 1.39133 4.87356 1.43728 5.44379 1.62136C6.01403 1.80544 6.53237 2.12237 6.95609 2.54606L8.00009 3.58939L9.04409 2.54606C9.46782 2.12237 9.98616 1.80544 10.5564 1.62136C11.1266 1.43728 11.7324 1.39133 12.3239 1.48729C12.9154 1.58326 13.4756 1.81839 13.9584 2.17332C14.4412 2.52824 14.8327 2.99281 15.1008 3.52873C15.4557 4.23862 15.5784 5.0422 15.4513 5.82566C15.3242 6.60912 14.9539 7.33275 14.3928 7.89406L8.00009 14.5627Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+
+
+
+          
+          <sup class="m-wishlist-count m:hidden"></sup>
+        </a>
+      </div>
+    {% endif %}
+    {% if section_settings.show_search_icon %}
+      <m-search-popup class="m-mobile-sticky-bar--item" data-open-search-popup>
+        <span class="m-mobile-sticky-bar--search">
+<svg width="16" height="16" fill="none" viewBox="0 0 20 20"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.227 12.13a7.553 7.553 0 1013.902-5.907A7.553 7.553 0 002.227 12.13v0zM14.518 14.517l3.982 3.982"></path></svg>
+        </span>
+      </m-search-popup>
+    {% endif %}
+    {% if shop.customer_accounts_enabled or shop.customer_accounts_optional %}
+      {% if section_settings.show_account_icon %}
+        <div class="m-mobile-sticky-bar--item">
+          <a href="{{ routes.account_url }}" aria-label="account">
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" alt-text="Account Icon" data-testid="account-icon"><g clip-path="url(#clip0_369_4314)"><path d="M6.66675 9.16683C6.66675 10.0509 7.01794 10.8987 7.64306 11.5239C8.26818 12.149 9.11603 12.5002 10.0001 12.5002C10.8841 12.5002 11.732 12.149 12.3571 11.5239C12.9822 10.8987 13.3334 10.0509 13.3334 9.16683C13.3334 8.28277 12.9822 7.43493 12.3571 6.80981C11.732 6.18469 10.8841 5.8335 10.0001 5.8335C9.11603 5.8335 8.26818 6.18469 7.64306 6.80981C7.01794 7.43493 6.66675 8.28277 6.66675 9.16683V9.16683Z" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path><path d="M15.7609 17.3968C15.0061 16.6372 14.1085 16.0344 13.1199 15.6231C12.1312 15.2118 11.0709 15 10.0001 15C8.92926 15 7.869 15.2118 6.88032 15.6231C5.89165 16.0344 4.99408 16.6372 4.23926 17.3968" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path><path d="M0.625 10C0.625 12.4864 1.61272 14.871 3.37087 16.6291C5.12903 18.3873 7.5136 19.375 10 19.375C12.4864 19.375 14.871 18.3873 16.6291 16.6291C18.3873 14.871 19.375 12.4864 19.375 10C19.375 7.5136 18.3873 5.12903 16.6291 3.37087C14.871 1.61272 12.4864 0.625 10 0.625C7.5136 0.625 5.12903 1.61272 3.37087 3.37087C1.61272 5.12903 0.625 7.5136 0.625 10V10Z" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"></path></g><defs><clipPath id="clip0_369_4314"><rect width="20" height="20" fill="white"></rect></clipPath></defs></svg>
+
+          </a>
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+{% endif %}
+{% schema %}
+{
+  "name": "Mobile sticky bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_mobile_sticky",
+      "label": "Show sticky bar",
+      "default": true,
+      "info": "Show a sticky bar on mobile to let customers shopping easier. Switch to mobile view to see it."
+    },
+    {
+      "type": "header",
+      "content": "Addons"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_home_icon",
+      "label": "Show home icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_icon",
+      "label": "Show products listing",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart_icon",
+      "label": "Show cart icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search_icon",
+      "label": "Show search icon",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_account_icon",
+      "label": "Show account icon",
+      "default": false,
+      "info": "Customers account must be enabled. See [Enabling customer accounts](https://help.shopify.com/en/manual/checkout-settings/customer-accounts)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_wishlist_icon",
+      "label": "Show wishlist icon",
+      "default": false,
+      "info": "Wishlist page must be specified"
+    }
+  ]
+}
+{% endschema %}

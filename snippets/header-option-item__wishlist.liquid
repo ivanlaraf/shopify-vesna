@@ -1,0 +1,52 @@
+{% liquid
+  if settings.wishlist_page != blank
+    assign url = pages[settings.wishlist_page].url
+  else
+    assign url = '/pages/wishlist'
+  endif
+
+  assign wishlist_app = settings.wishlist_app
+%}
+
+{% if wishlist_app == 'growave' %}
+  {% if shop.customer_accounts_enabled %}
+    {% liquid
+      assign ssw_fave_enabled = 1
+      if shop.metafields.ssw.fave_enabled
+        assign ssw_fave_enabled = shop.metafields.ssw.fave_enabled | plus: 0
+      endif
+    %}
+    {% if ssw_fave_enabled == 1 %}
+      <a
+        class="ssw-link-fave-menu ssw-link-fave-menu-hide-count"
+        href="{{ url }}"
+        aria-label="{{ shop.metafields.ssw.lang.my_faves }}"
+      >
+        <span class="m-tooltip m:block m-tooltip--bottom m-tooltip--style-2">
+<svg alt-text="Heart icon" data-testid="heart-icon" width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.00009 14.5627L1.60809 7.89606C1.04632 7.33472 0.675536 6.61076 0.548335 5.82686C0.421134 5.04295 0.543972 4.2389 0.899428 3.52873V3.52873C1.16746 2.99281 1.55901 2.52824 2.04179 2.17332C2.52458 1.81839 3.08479 1.58326 3.67626 1.48729C4.26774 1.39133 4.87356 1.43728 5.44379 1.62136C6.01403 1.80544 6.53237 2.12237 6.95609 2.54606L8.00009 3.58939L9.04409 2.54606C9.46782 2.12237 9.98616 1.80544 10.5564 1.62136C11.1266 1.43728 11.7324 1.39133 12.3239 1.48729C12.9154 1.58326 13.4756 1.81839 13.9584 2.17332C14.4412 2.52824 14.8327 2.99281 15.1008 3.52873C15.4557 4.23862 15.5784 5.0422 15.4513 5.82566C15.3242 6.60912 14.9539 7.33275 14.3928 7.89406L8.00009 14.5627Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          <span class="m-tooltip__content">{{ 'layout.wishlist.title' | t }}</span>
+        </span>
+        <span class="ssw-counter-fave-menu m-wishlist-count" style="display:none">0</span>
+      </a>
+      <script defer>
+        var sswFaveCounterMenuLoaded = true;
+      </script>
+    {% endif %}
+  {% endif %}
+{% else %}
+  <a
+    href="{{ url }}"
+    class="m-header__wishlist{% if box_size != blank %} {{ box_size }}{% endif %}"
+    aria-label="{{ 'layout.wishlist.title' | t }}"
+  >
+    {% if display_by == 'icon' %}
+      <span class="m-tooltip m:block m-tooltip--bottom m-tooltip--style-2">
+<svg alt-text="Heart icon" data-testid="heart-icon" width="20" height="20" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.00009 14.5627L1.60809 7.89606C1.04632 7.33472 0.675536 6.61076 0.548335 5.82686C0.421134 5.04295 0.543972 4.2389 0.899428 3.52873V3.52873C1.16746 2.99281 1.55901 2.52824 2.04179 2.17332C2.52458 1.81839 3.08479 1.58326 3.67626 1.48729C4.26774 1.39133 4.87356 1.43728 5.44379 1.62136C6.01403 1.80544 6.53237 2.12237 6.95609 2.54606L8.00009 3.58939L9.04409 2.54606C9.46782 2.12237 9.98616 1.80544 10.5564 1.62136C11.1266 1.43728 11.7324 1.39133 12.3239 1.48729C12.9154 1.58326 13.4756 1.81839 13.9584 2.17332C14.4412 2.52824 14.8327 2.99281 15.1008 3.52873C15.4557 4.23862 15.5784 5.0422 15.4513 5.82566C15.3242 6.60912 14.9539 7.33275 14.3928 7.89406L8.00009 14.5627Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+        <span class="m-tooltip__content">{{ 'layout.wishlist.title' | t }}</span>
+      </span>
+    {% else %}
+      {{ 'layout.wishlist.title' | t }}
+    {% endif %}
+    <sup class="m-wishlist-count m:hidden"></sup>
+  </a>
+{% endif %}

@@ -1,0 +1,11 @@
+<a
+  href="{{ routes.cart_url }}"
+  class="m-cart-icon-bubble"
+  aria-label="{{ cart.item_count }}"
+>
+  <span class="m-tooltip m:block m-tooltip--bottom m-tooltip--style-2">
+<svg alt-text="Bag Icon" width="20" height="20" fill="none" viewBox="0 0 20 20"><g clip-path="url(#clip0_577_599)"><path fill="currentColor" stroke="currentColor" stroke-width="0.25" d="M10.1.77a3.827 3.827 0 00-3.82 3.82v1.212H1.226a.459.459 0 00-.458.458v7.938a5.048 5.048 0 005.033 5.033h8.396a5.048 5.048 0 005.033-5.033V6.26a.459.459 0 00-.458-.458h-4.875V4.59A3.779 3.779 0 0010.1.77zM7.194 4.566A2.91 2.91 0 0110.1 1.66a2.91 2.91 0 012.905 2.906v1.212h-5.81V4.567zm11.144 2.15v7.481a4.13 4.13 0 01-4.118 4.118H5.803a4.13 4.13 0 01-4.118-4.118v-7.48H6.28V9.76h.915V6.717h5.788V9.76h.915V6.717h4.441z"></path></g><defs><clipPath id="clip0_577_599"><path fill="#fff" d="M0 0H20V20H0z"></path></clipPath></defs></svg>
+    <span class="m-tooltip__content">{{ 'layout.cart.title' | t }}</span>
+  </span>
+  <span class="m-cart-count-bubble m-cart-count{% if cart == empty %} m:hidden{% endif %}">{{ cart.item_count }}</span>
+</a>

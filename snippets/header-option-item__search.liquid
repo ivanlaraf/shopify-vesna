@@ -1,0 +1,45 @@
+{%- liquid
+  assign search_display = header_settings.search
+  assign main_class = 'm-header__search'
+
+  if icon_left == true
+    assign main_class = main_class | append: ' m-search-form--icon-left'
+  endif
+
+  if search_display == 'show_full'
+    assign main_class = main_class | append: ' m-search-form--full'
+  endif
+
+  if box_size != blank
+    assign main_class = main_class | append: ' ' | append: box_size
+  endif
+
+  assign main_class = main_class | append: ' m:flex m:items-center'
+-%}
+
+{% unless search_display == 'hide' %}
+  <m-search-popup class="{{ main_class }}" data-open-search-popup>
+    {% if icon_left == true %}
+      <button
+        class="m-search-form__button m:flex m:items-center"
+        aria-label="{{ 'general.search.placeholder_short' | t }}"
+      >
+        <span class="m-tooltip m:block m-tooltip--bottom m-tooltip--style-2">
+<svg width="16" height="16" fill="none" viewBox="0 0 20 20"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.227 12.13a7.553 7.553 0 1013.902-5.907A7.553 7.553 0 002.227 12.13v0zM14.518 14.517l3.982 3.982"></path></svg>
+          <span class="m-tooltip__content">{{ 'general.search.placeholder_short' | t }}</span>
+        </span>
+      </button>
+    {% endif %}
+    {%- if search_display == 'show_full' -%}
+      <span class="m-search-form__label">{{ 'general.search.placeholder' | t }}</span>
+    {%- endif -%}
+    {% if icon_left == blank or icon_left == false %}
+      <button type="submit" class="m-search-form__button" aria-label="{{ 'general.search.placeholder_short' | t }}">
+        <span class="m-tooltip m:block m-tooltip--bottom m-tooltip--style-2">
+<svg width="16" height="16" fill="none" viewBox="0 0 20 20"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.227 12.13a7.553 7.553 0 1013.902-5.907A7.553 7.553 0 002.227 12.13v0zM14.518 14.517l3.982 3.982"></path></svg>
+          <span class="m-tooltip__content">{{ 'general.search.placeholder_short' | t }}</span>
+        </span>
+      </button>
+    {% endif %}
+  </m-search-popup>
+{% endunless %}
